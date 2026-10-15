@@ -3,6 +3,41 @@ body {
     min-height: 100vh;
 }
 
+header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #fff;
+    border-bottom: 1px solid #d8e1ea;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 1rem;
+    list-style: none;
+}
+
+nav a {
+    display: block;
+    padding: 0.7rem 1rem;
+    border: 1px solid #3160AE;
+    border-radius: 6px;
+    background-color: #3160AE;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+nav a:hover,
+nav a:focus-visible {
+    background-color: #244a89;
+    border-color: #244a89;
+}
+
 .inner-container {
     min-height: 100vh;
     display: flex;
@@ -25,11 +60,11 @@ main {
 
 
 .logo {
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-    height: 25rem;
-    width: 25rem;
+    display: block;
+    width: 22rem;
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0.75rem 1.2rem rgb(35 76 142 / 16%));
 }
 .paint-boxes {
     position: static;
@@ -62,16 +97,35 @@ main {
 }
 
 .purple-paint {
-    background-color: purple;
+    background-color: #592d73;
     flex: 3;
     min-width: 0;
-    height: 10rem;
+    min-height: 10rem;
     box-sizing: border-box;
-
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 1.5rem 2rem;
+    border-radius: 6px;
     color: white;
+}
+
+.purple-paint h2,
+.purple-paint p {
+    margin: 0;
+}
+
+.purple-paint h2 {
+    max-width: 34rem;
+    font-size: 1.5rem;
+    line-height: 1.2;
+}
+
+.purple-paint p {
+    max-width: 48rem;
+    line-height: 1.55;
 }
 
 .photo-box {
@@ -109,18 +163,40 @@ main {
     background-color: #555;
 }
 
-.big-box {
+.big-boxes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(16rem, 1fr));
+    gap: 1rem;
     width: 100%;
-    height: 18rem;
+    overflow-x: auto;
+}
+
+.big-box {
+    min-height: 18rem;
     background-color: #3d3d3d;
     color: white;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    text-transform: lowercase;
-    font-size: 1.5rem;
-    letter-spacing: 0.08rem;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    border-radius: 6px;
     box-sizing: border-box;
+}
+
+.big-box h2,
+.big-box h3,
+.big-box p {
+    margin: 0;
+}
+
+.big-box h2,
+.big-box h3 {
+    line-height: 1.2;
+}
+
+.big-box p {
+    line-height: 1.55;
 }
 
 .blue-paint {
@@ -193,13 +269,45 @@ main {
 
 .logo-copy {
     z-index: 1;
-    color: white;
-    background-color: rgb(0 0 0 / 70%);
-    padding: 0.5rem 1rem;
+    align-self: end;
+    margin-bottom: 1.5rem;
+    padding: 0.8rem 1.3rem;
+    border: 1px solid rgb(49 96 174 / 18%);
+    border-radius: 8px;
+    background-color: rgb(255 255 255 / 92%);
+    box-shadow: 0 0.5rem 1.5rem rgb(35 76 142 / 16%);
+    color: #3160ae;
     text-align: center;
 }
 
-.logo-copy h2,
-.logo-copy p {
+.logo-copy h2 {
     margin: 0;
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.1;
+}
+
+.logo-copy p {
+    margin: 0.25rem 0 0;
+    color: #4fbbea;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+@media (max-width: 700px) {
+    .bottom-row {
+        flex-direction: column;
+    }
+
+    .purple-paint {
+        padding: 1.25rem;
+    }
+
+    .purple-paint h2 {
+        font-size: 1.3rem;
+    }
+
+    .big-box {
+        min-height: 12rem;
+    }
 }
