@@ -1,36 +1,228 @@
-/* Temporary blockout for all colors on the webpage */
+/* Compact type scale - keep text readable without pushing content below the fold */
+:root {
+    --text-base: 1rem;                              /* 16px body */
+    --text-lead: 1.125rem;                          /* 18px intro paragraphs */
+    --text-h3: 1.25rem;
+    --text-h2: clamp(1.5rem, 1.1rem + 1.5vw, 2rem); /* 24px -> 32px */
+    --text-hero: clamp(1.75rem, 1.2rem + 2vw, 2.5rem); /* 28px -> 40px */
+    --measure: 60ch;                                /* max line length for paragraphs */
+    --section-space: clamp(2rem, 5vw, 3.5rem);
+    --page-gutter: clamp(0.75rem, 3vw, 2rem);       /* inset of boxes from the page edges */
+    --border-subtle: 1px solid rgba(49, 96, 174, 0.12); /* --blue-dark at 12%, per the card pattern */
+
+    /* Brand colors - see scaleupmap-platform-reference.md */
+    --blue-light: #4FBBEA;      /* highlights, links, gradient start */
+    --blue-dark: #3160AE;       /* headers, primary buttons */
+    --blue-hover: #254a8f;      /* primary button hover */
+    --navy-title: #1a365d;      /* in-app titles */
+    --navy-headline: #1a2744;   /* landing headlines */
+    --text-secondary: #475569;  /* secondary body */
+    --text-meta: #64748b;       /* meta, captions */
+    --surface-app: #f1f5f9;     /* logged-in page background */
+    --surface-landing: #FAFBFD; /* public landing background */
+    --surface-card: #FFFFFF;    /* cards, heroes */
+}
+
+body {
+    margin: 0;
+    font-size: var(--text-base);
+    line-height: 1.6;
+    background-color: var(--surface-landing);
+    color: var(--text-secondary);
+}
+
+h2 {
+    font-size: var(--text-h2);
+    line-height: 1.2;
+}
+
+h3 {
+    font-size: var(--text-h3);
+}
+
+p {
+    max-width: var(--measure);
+}
+
+main > section {
+    padding-bottom: var(--section-space);
+}
+
 a {
-    color: #4FBBEA;
+    color: var(--blue-light);
+}
+
+/* Top navigation bar */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--surface-card);
+    border-bottom: var(--border-subtle);
+    box-shadow: 0 4px 20px rgba(26, 39, 68, 0.06);
+}
+
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.25rem 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 1rem calc(var(--page-gutter) + clamp(1rem, 5vw, 4rem)); /* line up with the hero text */
+}
+
+nav a {
+    color: var(--blue-dark);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+nav a:hover,
+nav a:focus-visible {
+    color: var(--blue-hover);
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+    text-decoration-color: var(--blue-light);
 }
 
 h1, h2, h3, h4, h5 {
-    color: #3160AE;
+    color: var(--blue-dark);
 }
 
-/* Feel free edit the flex-container class, just used the one from our in-class lesson */
+/* Reusable flex wrapper (stacks children vertically, left aligned) */
 .flex-container {
     display: flex;
-    flex-direction: row;
     flex-direction: column;
- 
-    justify-content: flex-start;
-    justify-content: flex-end;
     justify-content: center;
-    justify-content: space-between;
-    justify-content: space-around;
- 
     align-items: flex-start;
-    align-items: flex-end;
-    align-items: center;
-    align-items: stretch;
-    align-items: baseline;
- 
     gap: 1rem;
 }
 
 .section-box {
     background-image: linear-gradient(-45deg, #d6d6d6, rgb(200, 215, 221));
     /* typically we would let the content expand the boxes height, but we have no content here */
-    height: 1rem;
     width: 100%;
+}
+
+/* Primary hero box: text on the left, focus point anchored on the right */
+.header-box {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: center;
+    gap: 2rem;
+
+    width: calc(100% - 2 * var(--page-gutter)); /* inset from the page edges */
+    margin-inline: auto;
+    padding: var(--section-space) clamp(1rem, 5vw, 4rem); /* height comes from the content, not the viewport */
+    box-sizing: border-box;
+
+    margin-block: clamp(1rem, 3vw, 2rem); /* room for the shadow to show on the page background */
+    background-image: linear-gradient(135deg, var(--surface-card) 0%, var(--surface-landing) 50%, var(--surface-app) 100%);
+    border: var(--border-subtle);
+    box-shadow: 0 0 40px 4px rgba(26, 39, 68, 0.18); /* soft navy glow on all four sides */
+    color: var(--text-secondary);
+}
+
+.header-box h2 {
+    font-size: var(--text-hero);
+    line-height: 1.15;
+    max-width: 22ch;            /* wrap the headline into 2-3 tidy lines */
+    margin: 0;
+    color: var(--navy-headline);
+}
+
+.header-box p {
+    font-size: var(--text-lead);
+    margin: 0;
+}
+
+/* Right-hand visual anchor for a section (currently the company logo) */
+.focus-anchor {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.focus-anchor img {
+    width: clamp(160px, 25vw, 340px);
+    height: auto;
+    filter: blur(1.5px);        /* soften the edges of the upscaled 212px logo */
+}
+
+/* Row of reassurance points along the bottom of the hero */
+.trust-strip {
+    grid-column: 1 / -1;        /* span both hero columns */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.9375rem;
+    color: var(--text-meta);
+}
+
+.trust-strip li:not(:last-child)::after {
+    content: "|";
+    margin: 0 1.25rem;
+    color: rgba(49, 96, 174, 0.25); /* --blue-dark at 25% */
+}
+
+/* Supporting content cards below the hero - lighter take on .header-box */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: clamp(1rem, 3vw, 2rem);
+    width: calc(100% - 2 * var(--page-gutter));
+    margin-inline: auto;
+}
+
+.content-card {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background-color: var(--surface-card);
+    border: var(--border-subtle);
+    box-shadow: 0 0 24px 2px rgba(26, 39, 68, 0.08); /* same navy glow as the hero, toned down */
+}
+
+.content-card h2 {
+    color: var(--navy-headline);
+    margin-top: 0;
+}
+
+.content-card h3,
+.content-card h4 {
+    color: var(--navy-title);
+    margin-top: 0;
+}
+
+.content-card p:last-child {
+    margin-bottom: 0;
+}
+
+/* Narrow screens: stack the focus point under the text */
+@media (max-width: 700px) {
+    .header-box {
+        grid-template-columns: 1fr;
+    }
+
+    .focus-anchor {
+        justify-content: flex-start;
+    }
+
+    .focus-anchor img {
+        width: 140px;
+    }
+
+    .trust-strip {
+        flex-direction: column;
+    }
+
+    .trust-strip li::after {
+        display: none;
+    }
+
+    nav ul {
+        justify-content: flex-start;
+        gap: 0.25rem 1.25rem;
+    }
 }
